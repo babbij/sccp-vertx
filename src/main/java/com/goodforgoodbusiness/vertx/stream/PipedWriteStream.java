@@ -5,6 +5,7 @@ import java.nio.channels.Pipe;
 import java.nio.channels.Pipe.SinkChannel;
 import java.nio.channels.Pipe.SourceChannel;
 import java.nio.channels.ReadableByteChannel;
+import java.nio.channels.WritableByteChannel;
 
 import io.vertx.core.AsyncResult;
 import io.vertx.core.Handler;
@@ -18,23 +19,28 @@ import io.vertx.core.streams.WriteStream;
  * No flow control.
  */
 public class PipedWriteStream implements WriteStream<Buffer> {
-	private Pipe nioPipe = null;
-	private SourceChannel nioSource = null;
-	private SinkChannel nioSink = null;
+	private final SourceChannel nioSource;
+	private final SinkChannel nioSink;
 	
 	private boolean ended = false;
 	private Handler<Throwable> exceptionHandler = null;
 	
 	public PipedWriteStream() throws IOException {
-		this.nioPipe = Pipe.open();
+		var pipe = Pipe.open();
 		
-		
-		this.nioSource = this.nioPipe.source();
-		this.nioSink = this.nioPipe.sink();
+		this.nioSource = pipe.source();
+		this.nioSink = pipe.sink();
 	}
 	
 	public boolean isEnded() {
 		return ended;
+	}
+	
+	/**
+	 * Returns the source to which bytes are being written
+	 */
+	public WritableByteChannel getSink() {
+		return nioSink;
 	}
 	
 	/**
@@ -126,7 +132,7 @@ public class PipedWriteStream implements WriteStream<Buffer> {
 				});
 			}
 		}
-		catch (IOException e) {
+		catch (Exception e) {
 			if (this.exceptionHandler != null) {
 				this.exceptionHandler.handle(e);
 			}

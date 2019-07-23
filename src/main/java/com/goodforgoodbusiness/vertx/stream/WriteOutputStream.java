@@ -2,8 +2,10 @@ package com.goodforgoodbusiness.vertx.stream;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.concurrent.SynchronousQueue;
 
 import io.netty.buffer.Unpooled;
+import io.vertx.core.AsyncResult;
 import io.vertx.core.buffer.Buffer;
 import io.vertx.core.streams.WriteStream;
 
@@ -19,12 +21,42 @@ public class WriteOutputStream extends OutputStream {
 	
 	@Override
 	public void write(int b) throws IOException {
-		writeStream.write(Buffer.buffer(new byte [] { (byte)b }));
+		var blocker = new SynchronousQueue<AsyncResult<Void>>();
+		writeStream.write(Buffer.buffer(new byte [] { (byte)b }), result -> blocker.offer(result));
+		
+//		while (true) {
+//			try {
+//				var result = blocker.take();
+//				if (result.succeeded()) {
+//					return;
+//				}
+//				else {
+//					throw new IOException(result.cause());
+//				}
+//			}
+//			catch (InterruptedException e) {
+//			}
+//		}
 	}
 
 	@Override
 	public void write(byte b[], int off, int len) throws IOException {
-		writeStream.write(Buffer.buffer(Unpooled.wrappedBuffer(b, off, len)));
+		var blocker = new SynchronousQueue<AsyncResult<Void>>();
+		writeStream.write(Buffer.buffer(Unpooled.wrappedBuffer(b, off, len)), result -> blocker.offer(result));
+		
+//		while (true) {
+//			try {
+//				var result = blocker.take();
+//				if (result.succeeded()) {
+//					return;
+//				}
+//				else {
+//					throw new IOException(result.cause());
+//				}
+//			}
+//			catch (InterruptedException e) {
+//			}
+//		}
 	}
 	
 	@Override

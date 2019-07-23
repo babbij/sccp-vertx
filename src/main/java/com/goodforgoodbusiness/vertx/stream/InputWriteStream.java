@@ -15,13 +15,15 @@ import io.vertx.core.streams.WriteStream;
  * Uses {@link PipedWriteStream} to create an {@link InputStream} that has basic flow controls.
  */
 public class InputWriteStream extends PipedWriteStream implements WriteStream<Buffer> {
+	private static final int DEFAULT_WRITE_QUEUE_SIZE = 1000;
+	
 	// the underlying stream around the channel
 	private final InputStream channelStream;
 	
 	// the inputstream we create with flow controls
 	private final InputStream inputStream;
 	
-	private int maxWriteQueueSize = 1000;
+	private int maxWriteQueueSize = DEFAULT_WRITE_QUEUE_SIZE;
 	private int available = 0;
 	
 	private boolean writeQueueFull = false;
@@ -35,8 +37,6 @@ public class InputWriteStream extends PipedWriteStream implements WriteStream<Bu
 		this.channelStream = Channels.newInputStream(super.getSource());
 		
 		// wrap with some flow control
-		// whenever we're about to go to a blocking read, and don't have enough
-		// indicate we want more data
 		this.inputStream = new InputStream() {
 			@Override
 			public int available() throws IOException {
@@ -94,7 +94,8 @@ public class InputWriteStream extends PipedWriteStream implements WriteStream<Bu
 			
 			@Override
 			public void close() throws IOException {
-				super.close();
+				getSource().close();
+				getSink().close();
 				channelStream.close();
 			}
 		};
@@ -114,14 +115,6 @@ public class InputWriteStream extends PipedWriteStream implements WriteStream<Bu
 		else {
 			writeQueueFull = true;
 		}
-	}
-	
-	/**
-	 * Block this because wrapped in {@link InputStream}.
-	 */
-	@Override
-	public SourceChannel getSource() {
-		throw new UnsupportedOperationException();
 	}
 	
 	/**

@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>org.goodforgoodbusiness</groupId>
+		<groupId>com.colabriq</groupId>
 		<artifactId>sccp</artifactId>
 		<version>0.2-SNAPSHOT</version>
 		<relativePath>../../pom.xml</relativePath>
@@ -14,73 +12,62 @@
 	<artifactId>vertx</artifactId>
 	<packaging>jar</packaging>
 	<name>SCCP Vert.x Common Library</name>
-	<version>0.2-SNAPSHOT</version>
 
 	<dependencies>
 		<dependency>
 			<groupId>io.vertx</groupId>
 			<artifactId>vertx-core</artifactId>
-			<version>3.7.1</version>
+			<version>${vertx.version}</version>
 		</dependency>
 		
 		<dependency>
 			<groupId>io.vertx</groupId>
 			<artifactId>vertx-web</artifactId>
-			<version>3.7.1</version>
+			<version>${vertx.version}</version>
 		</dependency>
 		
 		<dependency>
 			<groupId>io.vertx</groupId>
 			<artifactId>vertx-reactive-streams</artifactId>
-			<version>3.7.1</version>
+			<version>${vertx.version}</version>
 		</dependency>
 		
 		<dependency>
  			<groupId>io.vertx</groupId>
 			<artifactId>vertx-web-client</artifactId>
- 			<version>3.7.1</version>
+ 			<version>${vertx.version}</version>
 		</dependency>
 	</dependencies>
 
 	<build>
-		<finalName>${project.artifactId}-${project.version}</finalName>
+		<finalName>${artifactId}-${version}</finalName>
 		<directory>target</directory>
 		<outputDirectory>target/classes</outputDirectory>
 		<testOutputDirectory>target/test-classes</testOutputDirectory>
 		<sourceDirectory>src/main/java</sourceDirectory>
 		<testSourceDirectory>src/test/java</testSourceDirectory>
+		
 		<resources>
 			<resource>
 				<directory>src/main/resources</directory>
 			</resource>
-			<resource>
-				<directory>lib</directory>
-			</resource>
 		</resources>
-		<!-- <testResources> <testResource> <directory>src/test/resources</directory> 
-			</testResource> </testResources> -->
+		
+		<testResources>
+			<testResource>
+				<directory>src/test/resources</directory>
+			</testResource>
+		</testResources>
+		
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.3</version>
-				<configuration>
-					<source>${jdk.version}</source>
-					<target>${jdk.version}</target>
-					<encoding>${project.build.sourceEncoding}</encoding>
-				</configuration>
 			</plugin>
-
+			
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-eclipse-plugin</artifactId>
-				<version>2.9</version>
-				<configuration>
-					<buildOutputDirectory>${project.build.directory}/classes</buildOutputDirectory>
-					<downloadSources>true</downloadSources>
-					<downloadJavadocs>false</downloadJavadocs>
-					<useProjectReferences>false</useProjectReferences>
-				</configuration>
 			</plugin>
 		</plugins>
 	</build>

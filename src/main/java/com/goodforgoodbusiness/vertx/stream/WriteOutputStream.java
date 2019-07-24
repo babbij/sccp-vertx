@@ -2,6 +2,7 @@ package com.goodforgoodbusiness.vertx.stream;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.SynchronousQueue;
 
 import io.netty.buffer.Unpooled;
@@ -21,8 +22,8 @@ public class WriteOutputStream extends OutputStream {
 	
 	@Override
 	public void write(int b) throws IOException {
-		var blocker = new SynchronousQueue<AsyncResult<Void>>();
-		writeStream.write(Buffer.buffer(new byte [] { (byte)b }), result -> blocker.offer(result));
+		var blocker = new CompletableFuture<AsyncResult<Void>>();
+		writeStream.write(Buffer.buffer(new byte [] { (byte)b }), result -> blocker.complete(result));
 		
 //		while (true) {
 //			try {
@@ -41,8 +42,8 @@ public class WriteOutputStream extends OutputStream {
 
 	@Override
 	public void write(byte b[], int off, int len) throws IOException {
-		var blocker = new SynchronousQueue<AsyncResult<Void>>();
-		writeStream.write(Buffer.buffer(Unpooled.wrappedBuffer(b, off, len)), result -> blocker.offer(result));
+		var blocker = new CompletableFuture<AsyncResult<Void>>();
+		writeStream.write(Buffer.buffer(Unpooled.wrappedBuffer(b, off, len)), result -> blocker.complete(result));
 		
 //		while (true) {
 //			try {

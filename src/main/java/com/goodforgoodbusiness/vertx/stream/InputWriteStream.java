@@ -15,7 +15,7 @@ import io.vertx.core.streams.WriteStream;
  * Uses {@link PipedWriteStream} to create an {@link InputStream} that has basic flow controls.
  */
 public class InputWriteStream extends PipedWriteStream implements WriteStream<Buffer> {
-	private static final int DEFAULT_WRITE_QUEUE_SIZE = 1000;
+	private static final int DEFAULT_WRITE_QUEUE_SIZE = 10000;
 	
 	// the underlying stream around the channel
 	private final InputStream channelStream;

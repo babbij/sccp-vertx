@@ -1,12 +1,12 @@
-package com.goodforgoodbusiness.vertx;
+package com.colabriq.vertx;
 
 import java.io.BufferedReader;
 import java.nio.channels.Channels;
 import java.nio.charset.Charset;
 import java.util.concurrent.CompletableFuture;
 
-import com.goodforgoodbusiness.vertx.stream.ReadableWriteStream;
-import com.goodforgoodbusiness.vertx.stream.WritableReadStream;
+import com.colabriq.vertx.stream.ReadableWriteStream;
+import com.colabriq.vertx.stream.WritableReadStream;
 
 import io.vertx.core.AsyncResult;
 import io.vertx.core.Vertx;

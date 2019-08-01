@@ -1,4 +1,4 @@
-package com.goodforgoodbusiness.vertx.stream;
+package com.colabriq.vertx.stream;
 
 import static io.netty.buffer.Unpooled.wrappedBuffer;
 

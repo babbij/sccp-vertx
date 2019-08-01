@@ -1,4 +1,4 @@
-package com.goodforgoodbusiness.vertx;
+package com.colabriq.vertx;
 
 import java.net.URI;
 import java.net.http.HttpClient;

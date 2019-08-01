@@ -1,4 +1,4 @@
-package com.goodforgoodbusiness.vertx.stream;
+package com.colabriq.vertx.stream;
 
 import java.io.IOException;
 import java.io.OutputStream;

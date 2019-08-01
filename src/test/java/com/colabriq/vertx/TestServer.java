@@ -1,9 +1,9 @@
-package com.goodforgoodbusiness.vertx;
+package com.colabriq.vertx;
 
 import java.io.IOException;
 import java.nio.channels.Channels;
 
-import com.goodforgoodbusiness.vertx.stream.WritableReadStream;
+import com.colabriq.vertx.stream.WritableReadStream;
 
 import io.vertx.core.Vertx;
 import io.vertx.ext.web.Router;

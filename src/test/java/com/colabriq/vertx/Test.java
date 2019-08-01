@@ -1,4 +1,4 @@
-package com.goodforgoodbusiness.vertx;
+package com.colabriq.vertx;
 
 import java.nio.ByteBuffer;
 

@@ -13,7 +13,7 @@
 
 	<artifactId>vertx</artifactId>
 	<packaging>jar</packaging>
-	<name>SCCP Vert.x Common Library</name>
+	<name>SCCP Vert.x Library</name>
 
 	<dependencies>	
 		<dependency>
